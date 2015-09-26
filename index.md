@@ -1,46 +1,114 @@
 ---
-title       : Publishing Slidify for Data Products
-subtitle    : Take 1
-author      : Victor Mo
-job         : Data Course
+title       : Slidify Presentation  Fit and Beat
+subtitle    : Coursera   
+author      : Victor Mo      
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : []            # {mathjax, quiz, bootstrap}
+widgets     : [bootstrap, quiz, shiny, interactive]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
+
+---  
+
+## Background
+OK, let's check how we can exersize better
+
+```
+## Error in eval(expr, envir, enclos): object 'opts_chunk' not found
+```
+
+With a large number of the examples in Data Science track focusing on health data and fitness sensor metrics, I chose workout minute loggging as an example for Shiny app development. 
+
+--- &radio
+
+## Brief Quiz!
+
+On average, how many days do you exercise per week?
+
+1. _0_
+2. _1_
+3. _2_
+4. _3_
+5. _4_
+6. _5_
+7. _6_
+8. _7_
+
+*** .hint 
+Be honest!
+
+***.explanation 
+Cool. Any answer was correct. Continue on to see how a basic Shiny App can visualize such data.
+
 ---
 
-## Read-And-Delete
+## App Instructions: 
 
-Statistics
-R random sampling.
+This app provides a user interface for dynamically logggin and plotting weekly workout minutes. The user can enter the number of minutes they spent exercising during the week as they apply to each category, and instantly see both a barplot (tab 1) and a table (tab 2) that visaulize/summarize the data. 
 
-1. Sample mean = x = ( ?? xi ) / n
-2. Sample standard deviation = s = sqrt [ ?? ( xi - x )2 / ( n - 1 ) ]
-3. Sample variance = s2 = ?? ( xi - x )2 / ( n - 1 )
-4. Variance of sample proportion = sp2 = pq / (n - 1)
-5. Pooled sample proportion = p = (p1 * n1 + p2 * n2) / (n1 + n2)
+---
 
-**Chao
+## Example Code - ui.R
 
------
+The ui.R code captures User input for different types of workouts as numeric values.
 
-## Slide 2
 
-Correlation
-1. Pearson product-moment correlation = r = ?? (xy) / sqrt [ ( ?? x2 ) * ( ?? y2 ) ]
-2. Linear correlation (sample data) = r = [ 1 / (n - 1) ] * ?? { [ (xi - x) / sx ] * [ (yi - y) / sy ] }
-3. Linear correlation (population data) = ?? = [ 1 / N ] * ?? { [ (Xi - ??X) / ??x ] * [ (Yi - ??Y) / ??y ] }
+```r
+# sidebarLayout(
+#                 sidebarPanel(
+#                         numericInput("endurance", label = h4("Endurance Aerobics"), value = 0, min=0, max=200, step=1),
+#
+#               ....................
+```
 
-----
 
-## Slide 3
+```r
+#                 mainPanel(
+#                         tabsetPanel(type="tabs",
+#                                     tabPanel("Plot", plotOutput("plot")),
+#                                     tabPanel("Table", tableOutput("table"))
+#                         )
+```
 
-1. Simple Linear Regression
-2. Simple linear regression line: y = b0 + b1x
-3. Regression coefficient = b1 = ?? [ (xi - x) (yi - y) ] / ?? [ (xi - x)2]
-4. Regression slope intercept = b0 = y - b1 * x
-5. Regression coefficient = b1 = r * (sy / sx)
-6. Standard error of regression slope = sb1 = sqrt [ ??(yi - yi)2 / (n - 2) ] / sqrt [ ??(xi - x)2 ]
+---
+
+## Example Code - server.R
+
+server.R code then captures each value, as it's updatae, and uses it to form both the bar plot and table. 
+
+
+```r
+#   values = reactive({
+#           data.frame("Endurance" <- input$endurance, 
+#                "Intense Aerobics" <- input$speed, 
+#                 ...............
+```
+
+
+```r
+#   labels = c("Endurance", "Intense Aerobics", "Heavy Weight", "Med Weight", "Flex", "Other")
+#   output$plot = renderPlot({
+#          
+#     barplot(as.numeric(values()[1,]),
+#          main = 'Weekly workout minutes, per exercise type',
+#          names.arg = labels,
+#          cex.names = 0.85,
+#          col="steelblue") })
+```
+- These are just snippets of the longer program.
+
+--- 
+
+## Screenshot
+
+An example of how the final outcome might appear:
+
+<img src="./assets/img/plot.png" />
+
+
+
+
+
+
 
